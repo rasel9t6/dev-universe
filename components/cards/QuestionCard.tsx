@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import RenderTag from '../shared/RenderTag';
-import Matric from '../shared/Matric/Matric';
+import Metric from '../shared/Metric/Metric';
 import { formatAndDivideNumber, getTimestamp } from '@/lib/utils';
 interface QuestionProps {
   _id: string;
@@ -13,6 +13,8 @@ interface QuestionProps {
   answers: Array<object>;
   createdAt: Date;
 }
+
+
 const QuestionCard = ({
   _id,
   title,
@@ -23,7 +25,9 @@ const QuestionCard = ({
   answers,
   createdAt,
 }: QuestionProps) => {
+
   return (
+
     <div
       key={_id}
       className='card-wrapper rounded-[10px] p-9 sm:px-11 '
@@ -42,15 +46,19 @@ const QuestionCard = ({
       </div>
       <div className=' mt-3.5 flex flex-wrap gap-2'>
         {tags.map((tag) => (
+
           <RenderTag
             key={tag._id}
             _id={tag._id}
             name={tag.name}
           />
-        ))}
+
+        )
+        )}
+
       </div>
       <div className='flex-between mt-6 w-full flex-wrap gap-3'>
-        <Matric
+        <Metric
           imgUrl='/assets/icons/avatar.svg'
           alt='user'
           value={author.name}
@@ -59,21 +67,21 @@ const QuestionCard = ({
           isAuthor
           textStyles='body-medium text-dark400_light700'
         />
-        <Matric
+        <Metric
           imgUrl='/assets/icons/like.svg'
           alt='Upvotes'
           value={formatAndDivideNumber(upvotes)}
           title=' Votes'
           textStyles='small-medium text-dark400_light800'
         />
-        <Matric
+        <Metric
           imgUrl='/assets/icons/message.svg'
           alt='message'
           value={formatAndDivideNumber(answers.length)}
           title=' Answers'
           textStyles='small-medium text-dark400_light800'
         />
-        <Matric
+        <Metric
           imgUrl='/assets/icons/eye.svg'
           alt='eye'
           value={formatAndDivideNumber(views)}

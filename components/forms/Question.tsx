@@ -1,9 +1,10 @@
 'use client';
-import React, { useRef } from 'react';
-import { Editor } from '@tinymce/tinymce-react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
 import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter, usePathname } from 'next/navigation';
+import React, { useRef, useState } from 'react';
+import { Editor } from '@tinymce/tinymce-react';
+import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -18,9 +19,17 @@ import { Input } from '@/components/ui/input';
 import { QuestionsSchema } from '@/lib/validations';
 import { Badge } from '../ui/badge';
 import Image from 'next/image';
+import { createQustion } from '@/lib/actions/question.action';
 
-const Question = () => {
+const type: any = 'create';
+interface Props {
+  mongoUserId: string;
+}
+const Question = ({ mongoUserId }: Props) => {
   const editorRef = useRef(null);
+  const router = useRouter();
+  const pathname = usePathname();
+  const [isSubmitting, setisSubmitting] = useState(false);
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
     defaultValues: {
@@ -30,15 +39,35 @@ const Question = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof QuestionsSchema>) {}
-  const handleInputKeyDown = (
+  async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
+    setisSubmitting(true);
+
+    try {
+   
+      // make an async call to your Api -> create a question
+      await createQustion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        path: pathname,
+        author: JSON.parse(mongoUserId),
+      });
+      router.push('/');
+    } catch (error) {
+    } finally {
+      setisSubmitting(false);
+    }
+  }
+  function handleInputKeyDown(
     e: React.KeyboardEvent<HTMLInputElement>,
     field: any
-  ) => {
+  ) {
     if (e.key === 'Enter' && field.name === 'tags') {
       e.preventDefault();
+
       const tagInput = e.target as HTMLInputElement;
       const tagValue = tagInput.value.trim();
+
       if (tagValue !== '') {
         if (tagValue.length > 15) {
           return form.setError('tags', {
@@ -46,21 +75,23 @@ const Question = () => {
             message: 'Tag must be less than 15 characters.',
           });
         }
+
         if (!field.value.includes(tagValue as never)) {
           form.setValue('tags', [...field.value, tagValue]);
           tagInput.value = '';
           form.clearErrors('tags');
+        } else {
+          form.trigger();
         }
-      } else {
-        form.trigger();
       }
     }
-  };
+  }
 
-  const handelTagRemove = (tag: string, field: any) => {
-    const newTags = field.value.filter((item: string) => item !== tag);
+  function handelTagRemove(tag: string, field: any) {
+    const newTags = field.value.filter((t: string) => t !== tag);
+
     form.setValue('tags', newTags);
-  };
+  }
 
   return (
     <Form {...form}>
@@ -106,6 +137,8 @@ const Question = () => {
                     // @ts-ignore
                     editorRef.current = editor;
                   }}
+                  onBlur={field.onBlur}
+                  onEditorChange={(content) => field.onChange(content)}
                   initialValue=''
                   init={{
                     height: 350,
@@ -189,7 +222,17 @@ const Question = () => {
             </FormItem>
           )}
         />
-        <Button type='submit'>Submit</Button>
+        <Button
+          type='submit'
+          disabled={isSubmitting}
+          className='primary-gradient   w-full !text-light-900'
+        >
+          {isSubmitting ? (
+            <>{type === 'edit' ? 'Editing...' : 'Posting...'}</>
+          ) : (
+            <>{type === 'edit' ? 'Edit Question' : 'Ask a Question'}</>
+          )}
+        </Button>
       </form>
     </Form>
   );
