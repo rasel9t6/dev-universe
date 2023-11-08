@@ -14,7 +14,6 @@ interface QuestionProps {
   createdAt: Date;
 }
 
-
 const QuestionCard = ({
   _id,
   title,
@@ -25,9 +24,7 @@ const QuestionCard = ({
   answers,
   createdAt,
 }: QuestionProps) => {
-
   return (
-
     <div
       key={_id}
       className='card-wrapper rounded-[10px] p-9 sm:px-11 '
@@ -46,20 +43,16 @@ const QuestionCard = ({
       </div>
       <div className=' mt-3.5 flex flex-wrap gap-2'>
         {tags.map((tag) => (
-
           <RenderTag
             key={tag._id}
             _id={tag._id}
             name={tag.name}
           />
-
-        )
-        )}
-
+        ))}
       </div>
       <div className='flex-between mt-6 w-full flex-wrap gap-3'>
         <Metric
-          imgUrl='/assets/icons/avatar.svg'
+          imgUrl={author.picture}
           alt='user'
           value={author.name}
           title={` - asked ${getTimestamp(createdAt)}`}
