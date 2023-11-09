@@ -53,7 +53,7 @@ export async function POST(req: Request) {
   }
 
   const eventType = evt.type;
-// create user
+  // create user
   if (eventType === 'user.created') {
     const { id, email_addresses, image_url, username, first_name, last_name } =
       evt.data;
@@ -62,7 +62,7 @@ export async function POST(req: Request) {
 
     const mongoUser = createUser({
       clerkId: id,
-      name: `${first_name}${last_name ? `${last_name}` : ''}`,
+      name: `${first_name}${last_name ? `  ${last_name}` : ''}`,
       username: username!,
       email: email_addresses[0].email_address,
       picture: image_url,
@@ -80,7 +80,7 @@ export async function POST(req: Request) {
     const mongoUser = updateUser({
       clerkId: id,
       updateData: {
-        name: `${first_name}${last_name ? `${last_name}` : ''}`,
+        name: `${first_name}${last_name ? ` ${last_name}` : ''}`,
         username: username!,
         email: email_addresses[0].email_address,
         picture: image_url,

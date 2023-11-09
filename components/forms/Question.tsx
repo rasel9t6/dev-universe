@@ -43,14 +43,13 @@ const Question = ({ mongoUserId }: Props) => {
     setisSubmitting(true);
 
     try {
-   
       // make an async call to your Api -> create a question
       await createQustion({
         title: values.title,
         content: values.explanation,
         tags: values.tags,
-        path: pathname,
         author: JSON.parse(mongoUserId),
+        path: pathname,
       });
       router.push('/');
     } catch (error) {

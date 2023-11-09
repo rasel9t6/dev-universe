@@ -1,5 +1,3 @@
-
-
 import { Schema, models, model, Document } from 'mongoose';
 
 export interface IQuestion extends Document {
@@ -9,7 +7,7 @@ export interface IQuestion extends Document {
   views: number;
   upvotes: Schema.Types.ObjectId[];
   downvotes: Schema.Types.ObjectId[];
-  author: Schema.Types.ObjectId;
+  author: Schema.Types.ObjectId[];
   answers: Schema.Types.ObjectId[];
   createdAt: Date;
 }

@@ -19,6 +19,8 @@ const Matric = ({
   textStyles,
   isAuthor,
 }: MetricProps) => {
+  console.log(imgUrl);
+  
   const metricContent = (
     <>
       <Image
