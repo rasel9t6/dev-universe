@@ -20,12 +20,14 @@ import { QuestionsSchema } from '@/lib/validations';
 import { Badge } from '../ui/badge';
 import Image from 'next/image';
 import { createQustion } from '@/lib/actions/question.action';
+import { useTheme } from '@/context/ThemeProvider';
 
 const type: any = 'create';
 interface Props {
   mongoUserId: string;
 }
 const Question = ({ mongoUserId }: Props) => {
+  const { mode } = useTheme();
   const editorRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
@@ -126,7 +128,7 @@ const Question = ({ mongoUserId }: Props) => {
           render={({ field }) => (
             <FormItem className='flex w-full flex-col gap-3'>
               <FormLabel className='paragraph-semibold text-dark400_light800'>
-                Detailed explanation of your problem{' '}
+                Detailed explanation of your problem
                 <span className='text-primary-500'>*</span>
               </FormLabel>
               <FormControl className='mt-3.5'>
@@ -165,12 +167,14 @@ const Question = ({ mongoUserId }: Props) => {
                       'alignright alignjustify | bullist numlist outdent indent | ' +
                       'removeformat | help',
                     content_style: 'body { font-family:Inter; font-size:16px }',
+                    skin: mode === 'dark' ? 'oxide-dark' : 'oxide',
+                    content_css: mode === 'dark' ? 'dark' : 'light',
                   }}
                 />
               </FormControl>
               <FormDescription className='body-regular mt-2.5 text-light-500'>
                 Introduce the problem and expand on what you put in the
-                title.Minimum 20 characters.
+                title.Minimum 100 characters.
               </FormDescription>
               <FormMessage className='text-red-500' />
             </FormItem>

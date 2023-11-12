@@ -10,11 +10,10 @@ import Link from 'next/link';
 
 export default async function Home() {
   const result = await GetQuestions({});
-
   console.log(result.questions.map((q) => {
-    const qa = q.author
-  return qa
-  }));  
+    const a = q.author.name
+    return a
+}));
 
   return (
     <>
