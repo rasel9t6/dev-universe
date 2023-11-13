@@ -1,7 +1,7 @@
 'use server';
 import Answer from '@/database/answer.model';
 import { connectToDatabase } from '../mongoose';
-import { CreateAnswerParams, GetAnswersParams } from './shared.types';
+import { AnswerVoteParams, CreateAnswerParams, GetAnswersParams } from './shared.types';
 import Question from '@/database/quwstion.model';
 import { revalidatePath } from 'next/cache';
 
@@ -40,4 +40,66 @@ export async function getAnswers(params: GetAnswersParams) {
         
         
     }
+}
+
+export async function upvoteAnswer(params: AnswerVoteParams) {
+  try {
+    connectToDatabase();
+    const { answerId, userId, hasupVoted, hasdownVoted, path } = params;
+
+    let updateQuery = {};
+    if (hasupVoted) {
+      updateQuery = { $pull: { upvotes: userId } };
+    } else if (hasdownVoted) {
+      updateQuery = {
+        $pull: { downvotes: userId },
+        $push: { upvotes: userId },
+      };
+    } else {
+      updateQuery = { $addToSet: { upvotes: userId } };
+    }
+
+    const answer = await Answer.findByIdAndUpdate(answerId, updateQuery, {
+      new: true,
+    });
+    if (!answer) {
+      throw new Error('Answer not found');
+    }
+    // Increment author's reputaion by +10 for upvoting a Answer
+    revalidatePath(path);
+    return answer;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function downvoteAnswer(params: AnswerVoteParams) {
+  try {
+    connectToDatabase();
+    const { answerId, userId, hasupVoted, hasdownVoted, path } = params;
+    let updateQuery = {};
+    if (hasdownVoted) {
+      updateQuery = { $pull: { downvotes: userId } };
+    } else if (hasupVoted) {
+      updateQuery = {
+        $pull: { upvotes: userId },
+        $push: { downvotes: userId },
+      };
+    } else {
+      updateQuery = { $addToSet: { downvotes: userId } };
+    }
+    const answer = Answer.findByIdAndUpdate(answerId, updateQuery, {
+      new: true,
+    });
+    if (!answer) {
+      throw new Error('Answer not found');
+    }
+    // Increment author's reputaion by +10 for upvoting a Answer
+    revalidatePath(path);
+    return answer;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 }

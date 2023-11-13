@@ -10,6 +10,7 @@ import Answer from '@/components/forms/Answer';
 import { auth } from '@clerk/nextjs';
 import { getUserById } from '@/lib/actions/user.action';
 import AllAnswers from '@/components/shared/AllAnswers';
+import Votes from '@/components/shared/Votes';
 
 const page = async ({ params, searchParams }: any) => {
   const result = await GetQuestionById({ questionId: params.id });
@@ -37,7 +38,19 @@ const page = async ({ params, searchParams }: any) => {
               {result.author.name}
             </p>
           </Link>
-          <div className='flex justify-end gap-1'>Voting</div>
+          <div className='flex justify-end gap-1'>
+              <Votes
+                type='Question'
+                itemId={JSON.stringify(result._id)}
+                userId={JSON.stringify(mongoUser._id)}
+                upvotes={result.upvotes.length}
+                downvotes={result.downvotes.length}
+                hasupVoted={result.upvotes.includes(mongoUser._id)}
+                hasdownVoted={result.downvotes.includes(mongoUser._id)}
+                hasSaved={mongoUser?.saved.includes(result._id)}
+              />
+           
+          </div>
         </div>
       </div>
       <div>
@@ -81,7 +94,7 @@ const page = async ({ params, searchParams }: any) => {
       </div>
       <AllAnswers
         questionId={result._id}
-        userId={JSON.stringify(mongoUser._id)}
+        userId={mongoUser._id}
         totalAnswers={result.answers.length}
       />
 
