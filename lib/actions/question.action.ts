@@ -5,14 +5,12 @@ import Tag from '@/database/tag.model';
 import User from '@/database/user.model';
 import { connectToDatabase } from '../mongoose';
 import {
-  
   CreateQuestionParams,
   GetQuestionByIdParams,
   GetQuestionsParams,
   QuestionVoteParams,
 } from './shared.types';
 import { revalidatePath } from 'next/cache';
-
 
 export async function createQustion(params: CreateQuestionParams) {
   try {
@@ -135,4 +133,3 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
     throw error;
   }
 }
-
