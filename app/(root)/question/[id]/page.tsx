@@ -19,6 +19,9 @@ const page = async ({ params, searchParams }: any) => {
   if (clerkId) {
     mongoUser = await getUserById({ userId: clerkId });
   }
+
+  console.log(result.upvotes);
+
   return (
     <>
       <div className='flex-start w-full flex-col'>
@@ -39,17 +42,16 @@ const page = async ({ params, searchParams }: any) => {
             </p>
           </Link>
           <div className='flex justify-end gap-1'>
-              <Votes
-                type='Question'
-                itemId={JSON.stringify(result._id)}
-                userId={JSON.stringify(mongoUser._id)}
-                upvotes={result.upvotes.length}
-                downvotes={result.downvotes.length}
-                hasupVoted={result.upvotes.includes(mongoUser._id)}
-                hasdownVoted={result.downvotes.includes(mongoUser._id)}
-                hasSaved={mongoUser?.saved.includes(result._id)}
-              />
-           
+            <Votes
+              type='Question'
+              itemId={JSON.stringify(result._id)}
+              userId={JSON.stringify(mongoUser._id)}
+              upvotes={result.upvotes.length}
+              downvotes={result.downvotes.length}
+              hasupVoted={result.upvotes.includes(mongoUser._id)}
+              hasdownVoted={result.downvotes.includes(mongoUser._id)}
+              hasSaved={mongoUser?.saved.includes(result._id)}
+            />
           </div>
         </div>
       </div>
