@@ -10,12 +10,7 @@ import Link from 'next/link';
 
 export default async function Home() {
   const result = await GetQuestions({});
-  console.log(
-    result.questions.map((q) => {
-      const a = q.upvotes;
-      return a;
-    })
-  );
+  
 
   return (
     <>

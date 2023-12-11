@@ -2,9 +2,9 @@
 
 import React from 'react';
 import Image from 'next/image';
-// import { deleteQuestion } from '@/lib/actions/question.action';
-import { useRouter } from 'next/navigation';
-// import { deleteAnswer } from '@/lib/actions/answer.action';
+import {deleteQuestion } from '@/lib/actions/question.action';
+import { usePathname, useRouter } from 'next/navigation';
+import { deleteAnswer } from '@/lib/actions/answer.action';
 
 interface Props {
   type: string;
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const EditDeleteAction = ({ type, itemId }: Props) => {
-  //   const pathname = usePathname();
+    const pathname = usePathname();
   const router = useRouter();
 
   const handleEdit = () => {
@@ -20,13 +20,13 @@ const EditDeleteAction = ({ type, itemId }: Props) => {
   };
 
   const handleDelete = async () => {
-    // if (type === 'Question') {
-    //   // Delete Question
-    //   await deleteQuestion({ questionId: JSON.parse(itemId), path: pathname });
-    // } else if (type === 'Answer') {
-    //   // Delete Answer
-    //   await deleteAnswer({ answerId: JSON.parse(itemId), path: pathname });
-    // }
+    if (type === 'Question') {
+      // Delete Question
+      await deleteQuestion({ questionId: JSON.parse(itemId), path: pathname });
+    } else if (type === 'Answer') {
+      // Delete Answer
+      await deleteAnswer({ answerId: JSON.parse(itemId), path: pathname });
+    }
   };
 
   return (
