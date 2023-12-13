@@ -3,10 +3,11 @@ import Noresult from '@/components/shared/Noresult';
 import { TagFilters } from '@/components/shared/filters';
 import LocalSearchbar from '@/components/shared/search/LocalSearchbar';
 import { getAllTags } from '@/lib/actions/tag.actions';
+import { SearchParamsProps } from '@/types';
 import Link from 'next/link';
 
-const page = async () => {
-  const result = await getAllTags({});
+const page = async ({ searchParams }: SearchParamsProps) => {
+  const result = await getAllTags({ searchQuery: searchParams.q });
   return (
     <>
       <h1 className='h1-bold text-dark100_light900'>All Tags</h1>
@@ -39,8 +40,10 @@ const page = async () => {
                 </div>
                 <div>
                   <p className='small-medium text-dark400_light500 mt-3.5'>
-
-                  <span className='body-semibold primary-text-gradient mr-2.5 '>{tag.questions.length}+</span> Questions
+                    <span className='body-semibold primary-text-gradient mr-2.5 '>
+                      {tag.questions.length}+
+                    </span>{' '}
+                    Questions
                   </p>
                 </div>
               </article>

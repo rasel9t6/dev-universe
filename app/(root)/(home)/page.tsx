@@ -6,11 +6,13 @@ import { HomePageFilters } from '@/components/shared/filters';
 import LocalSearchbar from '@/components/shared/search/LocalSearchbar';
 import { Button } from '@/components/ui/button';
 import { GetQuestions } from '@/lib/actions/question.action';
+import { SearchParamsProps } from '@/types';
 import Link from 'next/link';
 
-export default async function Home() {
-  const result = await GetQuestions({});
-  
+export default async function Home({ searchParams }: SearchParamsProps) {
+  const result = await GetQuestions({
+    searchQuery: searchParams.q,
+  });
 
   return (
     <>
@@ -59,7 +61,7 @@ export default async function Home() {
         ) : (
           <Noresult
             title="There's no question to show"
-            description='Be the frist to break the silence! 🚀 Ask a Question and kickstart thte
+            description='Be the frist to break the silence! 🚀 Ask a Question and kickstart the
         disscussion. Our quary could be the next big thing others learn from.
         Get involved! 💡'
             link='/ask-question'
