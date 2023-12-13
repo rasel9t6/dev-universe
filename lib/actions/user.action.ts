@@ -6,7 +6,6 @@ import {
   CreateUserParams,
   DeleteUserParams,
   GetAllUsersParams,
-  GetQuestionsParams,
   GetSavedQuestionsParams,
   GetUserByIdParams,
   GetUserStatsParams,
