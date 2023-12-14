@@ -11,6 +11,9 @@ import Tag, { ITag } from '@/database/tag.model';
 
 import { FilterQuery } from 'mongoose';
 import Question from '@/database/quwstion.model';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Filter } from 'lucide-react';
+import { formUrlQuery } from '../utils';
 
 export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
   try {
@@ -31,12 +34,34 @@ export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
 export async function getAllTags(params: GetAllTagsParams) {
   try {
     connectToDatabase();
-    const { searchQuery } = params;
+    // const searchParams = useSearchParams()
+    // const router = useRouter()
+
+    let searchOptions = {};
+
+    const { searchQuery, filter } = params;
     const query: FilterQuery<typeof Tag> = {};
     if (searchQuery) {
       query.$or = [{ name: new RegExp(searchQuery, 'i') }];
     }
-    const tags = await Tag.find(query);
+    switch (filter) {
+      case 'popular':
+        searchOptions = { questions: -1 };
+        break;
+      case 'recent':
+        searchOptions = { createdAt: -1 };
+        break;
+      case 'name':
+        searchOptions = { name: -1 };
+        break;
+      case 'old':
+        searchOptions = { createdAt: 1 };
+        break;
+
+      default:
+        break;
+    }
+    const tags = await Tag.find(query).sort(searchOptions);
     return { tags };
   } catch (error) {
     console.log(error);

@@ -1,8 +1,8 @@
-import { getTopInteractedTags } from '@/lib/actions/tag.actions';
+// import { getTopInteractedTags } from '@/lib/actions/tag.actions';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Badge } from '../ui/badge';
-import RenderTag from '../shared/RenderTag';
+// import { Badge } from '../ui/badge';
+// import RenderTag from '../shared/RenderTag';
 
 interface Props {
   user: {
@@ -14,13 +14,15 @@ interface Props {
   };
 }
 const UserCard = async ({ user }: Props) => {
-  const interactedTags = await getTopInteractedTags({ userId: user._id });
+  // const interactedTags = await getTopInteractedTags({ userId: user._id });
+ 
+  
   return (
     <Link
       href={`/profile/${user.clerkId}`}
       className='shadow-light100_darknone w-full max-xs:min-w-full xs:w-[260px]'
     >
-      <article>
+      <article className='background-light900_dark200 light-border flex w-full flex-col items-center justify-center rounded-2xl border p-8'>
         <Image
           src={user.picture}
           alt='user profile picture'
@@ -37,7 +39,7 @@ const UserCard = async ({ user }: Props) => {
             @{user.username}
           </p>
         </div>
-        <div>
+        {/* <div>
           {interactedTags.length > 0 ? (
             <div className='flex items-center gap-2'>
               {interactedTags.map((tag) => (
@@ -51,7 +53,7 @@ const UserCard = async ({ user }: Props) => {
           ) : (
             <Badge>No tags yet</Badge>
           )}
-        </div>
+        </div> */}
       </article>
     </Link>
   );
