@@ -21,7 +21,7 @@ const ProfileLink = ({ imgUrl, href, title }: Props) => {
           target='_blank'
           className='text-blue-500'
         >
-          {title}
+         {title}
         </Link>
       ) : (
         <p className='paragraph-medium text-dark400_light700'>{title}</p>
