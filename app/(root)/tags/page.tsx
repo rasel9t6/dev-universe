@@ -1,7 +1,7 @@
 import Filter from '@/components/shared/Filter';
 import Noresult from '@/components/shared/Noresult';
 import Pagination from '@/components/shared/Pagination';
-import { TagFilters } from '@/components/shared/filters';
+import { TagFilters } from '@/constants/filters';
 import LocalSearchbar from '@/components/shared/search/LocalSearchbar';
 import { getAllTags } from '@/lib/actions/tag.actions';
 import { SearchParamsProps } from '@/types';
@@ -11,7 +11,8 @@ const page = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllTags({
     searchQuery: searchParams.q,
     filter: searchParams.filter,
-  page: searchParams.page? +searchParams.page : 1});
+    page: searchParams.page ? +searchParams.page : 1,
+  });
   return (
     <>
       <h1 className='h1-bold text-dark100_light900'>All Tags</h1>

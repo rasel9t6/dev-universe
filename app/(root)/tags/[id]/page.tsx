@@ -4,7 +4,7 @@ import Noresult from '@/components/shared/Noresult';
 import Pagination from '@/components/shared/Pagination';
 
 import LocalSearchbar from '@/components/shared/search/LocalSearchbar';
-import { IQuestion } from '@/database/quwstion.model';
+import { IQuestion } from '@/database/question.model';
 import { getQuestionByTagId } from '@/lib/actions/tag.actions';
 import { URLProps } from '@/types';
 import React from 'react';

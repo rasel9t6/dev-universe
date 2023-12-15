@@ -1,6 +1,6 @@
 import { getAnswers } from '@/lib/actions/answer.action';
 import Filter from './Filter';
-import { AnswerFilters } from './filters';
+import { AnswerFilters } from '../../constants/filters';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getTimestamp } from '@/lib/utils';
@@ -23,7 +23,6 @@ const AllAnswers = async ({
   page,
   filter,
 }: Props) => {
- 
   const result = await getAnswers({
     questionId,
     page: page ? +page : 1,

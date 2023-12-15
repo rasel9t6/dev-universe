@@ -3,7 +3,7 @@ import HomeFilters from '@/components/home/HomeFilters';
 import Filter from '@/components/shared/Filter';
 import Noresult from '@/components/shared/Noresult';
 import Pagination from '@/components/shared/Pagination';
-import { HomePageFilters } from '@/components/shared/filters';
+import { HomePageFilters } from '@/constants/filters';
 import LocalSearchbar from '@/components/shared/search/LocalSearchbar';
 import { Button } from '@/components/ui/button';
 import { GetQuestions } from '@/lib/actions/question.action';

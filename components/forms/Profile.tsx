@@ -19,15 +19,16 @@ import { useState } from 'react';
 import { ProfileSchema } from '@/lib/validations';
 import { usePathname, useRouter } from 'next/navigation';
 import { updateUser } from '@/lib/actions/user.action';
-import router from 'next/router';
+
 interface Props {
   clerkId: string;
   user: string;
 }
 const Profile = ({ clerkId, user }: Props) => {
-  const parsedUser = JSON.parse(user);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const parsedUser = JSON.parse(user);
   const pathname = usePathname();
+  const router = useRouter();
   const form = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {

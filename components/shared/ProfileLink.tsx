@@ -24,7 +24,7 @@ const ProfileLink = ({ imgUrl, href, title }: Props) => {
           {title}
         </Link>
       ) : (
-        <p className='paragraph-medium text-dark400_light700'>Joined {title}</p>
+        <p className='paragraph-medium text-dark400_light700'>{title}</p>
       )}
     </div>
   );

@@ -1,6 +1,6 @@
 'use server';
 
-import Question from '@/database/quwstion.model';
+import Question from '@/database/question.model';
 import { connectToDatabase } from '../mongoose';
 import { ViewQuestionParams } from './shared.types';
 import Interaction from '@/database/interaction.model';

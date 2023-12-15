@@ -10,7 +10,7 @@ import User from '@/database/user.model';
 import Tag, { ITag } from '@/database/tag.model';
 
 import { FilterQuery } from 'mongoose';
-import Question from '@/database/quwstion.model';
+import Question from '@/database/question.model';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Filter } from 'lucide-react';
 import { formUrlQuery } from '../utils';

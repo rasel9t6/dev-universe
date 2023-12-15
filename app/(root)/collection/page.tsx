@@ -3,7 +3,7 @@ import QuestionCard from '@/components/cards/QuestionCard';
 import Filter from '@/components/shared/Filter';
 import Noresult from '@/components/shared/Noresult';
 import Pagination from '@/components/shared/Pagination';
-import { QuestionFilters } from '@/components/shared/filters';
+import { QuestionFilters } from '@/constants/filters';
 import LocalSearchbar from '@/components/shared/search/LocalSearchbar';
 import { getSavedQuestions } from '@/lib/actions/user.action';
 import { SearchParamsProps } from '@/types';

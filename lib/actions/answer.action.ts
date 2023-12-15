@@ -7,9 +7,10 @@ import {
   DeleteAnswerParams,
   GetAnswersParams,
 } from './shared.types';
-import Question from '@/database/quwstion.model';
+import Question from '@/database/question.model';
 import { revalidatePath } from 'next/cache';
 import Interaction from '@/database/interaction.model';
+import User from '@/database/user.model';
 
 export async function createAnswer(params: CreateAnswerParams) {
   try {
@@ -21,10 +22,18 @@ export async function createAnswer(params: CreateAnswerParams) {
       question,
       path,
     });
-    await Question.findByIdAndUpdate(question, {
+    const questionObject = await Question.findByIdAndUpdate(question, {
       $push: { answers: newAnswer._id },
     });
-    // TODO: Add interaction
+
+    await Interaction.create({
+      user: author,
+      action: 'answer',
+      question,
+      answer: newAnswer._id,
+      tags: questionObject.tags,
+    });
+    await User.findByIdAndUpdate(author, { $inc: { reputation: 10 } });
     revalidatePath(path);
   } catch (error) {
     console.log(error);
@@ -93,6 +102,12 @@ export async function upvoteAnswer(params: AnswerVoteParams) {
       throw new Error('Answer not found');
     }
     // Increment author's reputaion by +10 for upvoting a Answer
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasupVoted ? -2 : 2 },
+    });
+    await User.findByIdAndUpdate(answer.author, {
+      $inc: { reputation: hasdownVoted ? -10 : 10 },
+    });
     revalidatePath(path);
     return answer;
   } catch (error) {
@@ -103,9 +118,12 @@ export async function upvoteAnswer(params: AnswerVoteParams) {
 
 export async function downvoteAnswer(params: AnswerVoteParams) {
   try {
+    // Assuming connectToDatabase initializes the database connection.
     connectToDatabase();
+
     const { answerId, userId, hasupVoted, hasdownVoted, path } = params;
     let updateQuery = {};
+
     if (hasdownVoted) {
       updateQuery = { $pull: { downvotes: userId } };
     } else if (hasupVoted) {
@@ -116,17 +134,31 @@ export async function downvoteAnswer(params: AnswerVoteParams) {
     } else {
       updateQuery = { $addToSet: { downvotes: userId } };
     }
-    const answer = Answer.findByIdAndUpdate(answerId, updateQuery, {
+
+    const answer = await Answer.findByIdAndUpdate(answerId, updateQuery, {
       new: true,
     });
+
     if (!answer) {
       throw new Error('Answer not found');
     }
-    // Increment author's reputaion by +10 for upvoting a Answer
+
+    // Increment author's reputation by +10 for downvoting an answer
+    await User.findByIdAndUpdate(answer.author, {
+      $inc: { reputation: hasdownVoted ? -10 : 10 },
+    });
+
+    // Increment user's reputation by -2 for downvoting an answer
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasupVoted ? -2 : 2 },
+    });
+
+    // Revalidate path (assuming this function exists and is appropriate for your use case)
     revalidatePath(path);
+
     return answer;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }
@@ -145,6 +177,7 @@ export async function deleteAnswer(params: DeleteAnswerParams) {
       { $pull: { answers: answerId } }
     );
     await Interaction.deleteMany({ answer: answerId });
+
     revalidatePath(path);
   } catch (error) {
     console.log(error);

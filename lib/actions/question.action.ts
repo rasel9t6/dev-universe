@@ -1,6 +1,6 @@
 'use server';
 
-import Question from '@/database/quwstion.model';
+import Question from '@/database/question.model';
 import Tag from '@/database/tag.model';
 import User from '@/database/user.model';
 import { connectToDatabase } from '../mongoose';
@@ -39,8 +39,17 @@ export async function createQustion(params: CreateQuestionParams) {
     await Question.findByIdAndUpdate(question._id, {
       $push: { tags: { $each: tagDocuments } },
     });
+    await Interaction.create({
+      user: author,
+      action: 'ask_question',
+      question: question._id,
+      tags: tagDocuments,
+    });
+    await User.findByIdAndUpdate(author, { $inc: { reputation: 5 } });
     revalidatePath(path);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 }
 export async function GetQuestions(params: GetQuestionsParams) {
   try {
@@ -128,6 +137,12 @@ export async function upvoteQuestion(params: QuestionVoteParams) {
       throw new Error('Question not found');
     }
     // Increment author's reputaion by +10 for upvoting a question
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasupVoted ? -1 : 1 },
+    });
+    await User.findByIdAndUpdate(question.author, {
+      $inc: { reputation: hasupVoted ? -10 : 10 },
+    });
     revalidatePath(path);
     return question;
   } catch (error) {
@@ -151,13 +166,22 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
     } else {
       updateQuery = { $addToSet: { downvotes: userId } };
     }
-    const question = Question.findByIdAndUpdate(questionId, updateQuery, {
+    const question = await Question.findByIdAndUpdate(questionId, updateQuery, {
       new: true,
     });
     if (!question) {
       throw new Error('Question not found');
     }
-    // Increment author's reputaion by +10 for upvoting a question
+
+    // Increment author's reputation by +10 for downvoting an answer
+    await User.findByIdAndUpdate(question.author, {
+      $inc: { reputation: hasdownVoted ? -10 : 10 },
+    });
+
+    // Increment user's reputation by -2 for downvoting an answer
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasupVoted ? -2 : 2 },
+    });
     revalidatePath(path);
     return question;
   } catch (error) {
