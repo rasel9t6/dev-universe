@@ -2,6 +2,7 @@ import QuestionCard from '@/components/cards/QuestionCard';
 
 import Filter from '@/components/shared/Filter';
 import Noresult from '@/components/shared/Noresult';
+import Pagination from '@/components/shared/Pagination';
 import { QuestionFilters } from '@/components/shared/filters';
 import LocalSearchbar from '@/components/shared/search/LocalSearchbar';
 import { getSavedQuestions } from '@/lib/actions/user.action';
@@ -14,7 +15,8 @@ export default async function Home({ searchParams }: SearchParamsProps) {
   const result = await getSavedQuestions({
     clerkId: userId,
     searchQuery: searchParams.q,
-    filter: searchParams.filter
+    filter: searchParams.filter,
+    page: searchParams.page ? +searchParams.page : 1,
   });
 
   return (
@@ -33,7 +35,6 @@ export default async function Home({ searchParams }: SearchParamsProps) {
         <Filter
           filters={QuestionFilters}
           otherClasses='min-h-[56px] sm:min-w-[170px]'
-          
         />
       </div>
       <div className='mt-10 flex w-full flex-col gap-6'>
@@ -61,6 +62,12 @@ export default async function Home({ searchParams }: SearchParamsProps) {
             linkTitle='Ask a Question'
           />
         )}
+      </div>
+      <div className='mt-10'>
+        <Pagination
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+          isNext={result.isNext}
+        />
       </div>
     </>
   );
