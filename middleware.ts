@@ -15,6 +15,7 @@ export default authMiddleware({
     '/api/webhook',
     '/api/chatgpt',
     '/ask-question',
+    '/profile',
     '/collection',
   ],
 });
