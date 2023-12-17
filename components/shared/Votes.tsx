@@ -10,6 +10,8 @@ import { formatAndDivideNumber } from '@/lib/utils';
 import { downvoteAnswer, upvoteAnswer } from '@/lib/actions/answer.action';
 import { toggleSaveQuestion } from '@/lib/actions/user.action';
 import { viewQuestion } from '@/lib/actions/interaction.action';
+import { toast } from '../ui/use-toast';
+
 interface Props {
   type: string;
   itemId: string;
@@ -20,6 +22,7 @@ interface Props {
   hasdownVoted: boolean;
   hasSaved?: boolean;
 }
+
 const Votes = ({
   type,
   itemId,
@@ -39,10 +42,20 @@ const Votes = ({
       questionId: JSON.parse(itemId),
       path: pathname,
     });
+    return toast({
+      title: `Question ${
+        !hasSaved ? 'Saved in' : 'Remove from'
+      } your collection`,
+      variant: !hasSaved ? 'default' : 'destructive',
+    });
   };
+
   const handleVote = async (action: string) => {
     if (!userId) {
-      return;
+      return toast({
+        title: 'Please log in',
+        description: 'You must be logged in to perform this action',
+      });
     }
     if (action === 'upvote') {
       if (type === 'Question') {
@@ -62,8 +75,11 @@ const Votes = ({
           path: pathname,
         });
       }
-      // TODO: show a toast
-      return;
+
+      return toast({
+        title: `Upvote ${!hasupVoted ? 'Successful' : 'Remove'}`,
+        variant: !hasupVoted ? 'default' : 'destructive',
+      });
     }
     if (action === 'downvote') {
       if (type === 'Question') {
@@ -83,15 +99,20 @@ const Votes = ({
           path: pathname,
         });
       }
-      // TODO: show a toast
+      return toast({
+        title: `Downvote ${!hasdownVoted ? 'Successful' : 'Remove'}`,
+        variant: !hasdownVoted ? 'default' : 'destructive',
+      });
     }
   };
+
   useEffect(() => {
     viewQuestion({
       questionId: JSON.parse(itemId),
       userId: userId ? JSON.parse(userId) : undefined,
     });
   }, [itemId, userId, pathname, router]);
+
   return (
     <div className='flex gap-5'>
       <div className='flex-center gap-2'>

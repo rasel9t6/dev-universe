@@ -1,35 +1,12 @@
 'use server';
 
-import {
-  GetAllTagsParams,
-  GetQuestionsByTagIdParams,
-  GetTopInteractedTagsParams,
-} from './shared.types';
+import { GetAllTagsParams, GetQuestionsByTagIdParams } from './shared.types';
 import { connectToDatabase } from '../mongoose';
 import User from '@/database/user.model';
 import Tag, { ITag } from '@/database/tag.model';
 
 import { FilterQuery } from 'mongoose';
 import Question from '@/database/question.model';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { Filter } from 'lucide-react';
-import { formUrlQuery } from '../utils';
-
-export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
-  try {
-    connectToDatabase();
-    const { userId } = params;
-    const user = await User.findById(userId);
-    if (!user) throw new Error('User not found');
-
-    // Find interactions for the user and group by tags...
-    // Interaction...
-    return [{ _id: '1', name: 'tag' }];
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-}
 
 export async function getAllTags(params: GetAllTagsParams) {
   try {
@@ -102,7 +79,7 @@ export async function getQuestionByTagId(params: GetQuestionsByTagIdParams) {
     const isNext = tag.questions.length > pageSize;
     return { tagTitle: tag.name, questions, isNext };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }

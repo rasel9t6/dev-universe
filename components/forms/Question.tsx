@@ -21,6 +21,7 @@ import { Badge } from '../ui/badge';
 import Image from 'next/image';
 import { createQustion, editQuestion } from '@/lib/actions/question.action';
 import { useTheme } from '@/context/ThemeProvider';
+import { toast } from '../ui/use-toast';
 
 interface Props {
   type?: string;
@@ -56,6 +57,11 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
           content: values.explanation,
           path: pathname,
         });
+        toast({
+          title: 'Question Edited',
+          description: 'Your question has been successfully edited.',
+          variant: 'default',
+        });
         router.push(`/question/${parsedQuestionDetails._id}`);
       } else {
         await createQustion({
@@ -65,9 +71,15 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
           author: JSON.parse(mongoUserId),
           path: pathname,
         });
+        toast({
+          title: 'Question Created',
+          description: 'Your question has been successfully created.',
+          variant: 'success',
+        });
         router.push('/');
       }
     } catch (error) {
+
     } finally {
       setisSubmitting(false);
     }
@@ -229,6 +241,7 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
                               width={12}
                               height={12}
                               className='cursor-pointer object-contain invert-0 dark:invert'
+                              
                             />
                           )}
                         </Badge>
@@ -238,7 +251,7 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
                 </>
               </FormControl>
               <FormDescription className='body-regular mt-2.5 text-light-500'>
-                Add up to 3 tags to describe what your question is about. You
+                Add up to 5 tags to describe what your question is about. You
                 bedd to press enter to add tag.
               </FormDescription>
               <FormMessage className='text-red-500' />

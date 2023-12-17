@@ -1,4 +1,5 @@
 import Question from '@/components/forms/Question';
+import { toast } from '@/components/ui/use-toast';
 import { GetQuestionById } from '@/lib/actions/question.action';
 import { getUserById } from '@/lib/actions/user.action';
 import { ParamsProps } from '@/types';
@@ -7,7 +8,13 @@ import React from 'react';
 
 const page = async ({ params }: ParamsProps) => {
   const { userId } = auth();
-  if (!userId) return null;
+ if (!userId) {
+   toast({
+     title: 'Please log in',
+     description: 'You must be logged in to perform this action',
+   });
+   return null; 
+ }
   const mongoUser = await getUserById({ userId });
   const result = await GetQuestionById({
     questionId: params.id,

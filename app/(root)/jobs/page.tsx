@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const page = () => {
-  return (
-    <div>Find Jobs</div>
-  )
-}
+  return <div>Oops! This page is under mentenance 👷🚩</div>;
+};
 
-export default page
+export default page;

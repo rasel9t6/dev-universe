@@ -26,7 +26,7 @@ const GlobalSearch = () => {
         if (query) {
           const newUrl = removeKeysFromQuery({
             params: searchParams.toString(),
-            keysToRemove: ['global','type'],
+            keysToRemove: ['global', 'type'],
           });
           router.push(newUrl, { scroll: false });
         }
@@ -57,7 +57,7 @@ const GlobalSearch = () => {
             }
           }}
           placeholder='Search globally'
-          className='paragraph-regular text-dark400_light700 no-focus placeholder background-light800_darkgradient border-none shadow-none outline-none'
+          className='paragraph-regular text-dark400_light700 no-focus placeholder  border-none bg-transparent shadow-none outline-none'
         />
       </div>
       {isOpen && <GlobalResult />}

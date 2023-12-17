@@ -9,8 +9,7 @@ interface Props {
   showCount?: boolean;
 }
 const RenderTag = ({ _id, name, totalQuestions, showCount }: Props) => {
- 
-  
+
   return (
     <Link
       href={`/tags/${_id}`}

@@ -20,7 +20,6 @@ const page = async ({ params, searchParams }: any) => {
     mongoUser = await getUserById({ userId: clerkId });
   }
 
-  console.log(result.upvotes);
 
   return (
     <>
