@@ -11,7 +11,33 @@ import { SignedIn, auth } from '@clerk/nextjs';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-
+import type { Metadata } from 'next';
+export const metadata: Metadata = {
+  title: 'Profile | Dev Universe',
+  icons: { icon: '/assets/images/site-logo.svg' },
+  openGraph: {
+    type: 'website',
+    url: 'https://dev-universe.vercel.app',
+    title: 'Dev Universe - Empowering Developers to Collaborate and Innovate',
+    description:
+      'Join Dev Universe, the vibrant hub where developers collaborate, learn, and innovate! Explore a supportive community, ask and answer programming questions, harness the power of AI, vote for excellence, save valuable insights, and stay informed and inspired. Your journey to coding excellence begins here in the universe of endless possibilities!',
+    siteName: 'Dev Universe',
+    images: [
+      {
+        url: '/app/meta-image.png',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Dev Universe - Empowering Developers to Collaborate and Innovate',
+    description:
+      'Join Dev Universe, the vibrant hub where developers collaborate, learn, and innovate! Explore a supportive community, ask and answer programming questions, harness the power of AI, vote for excellence, save valuable insights, and stay informed and inspired. Your journey to coding excellence begins here in the universe of endless possibilities!',
+    site: '@Dev Universe',
+    creator: '@Dev Universe',
+    images: '/app/meta-image.png',
+  },
+};
 const Page = async ({ params, searchParams }: URLProps) => {
   const { userId: clerkId } = auth();
   const userInfo = await getUserInfo({ userId: params.id });

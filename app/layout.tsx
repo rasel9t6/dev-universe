@@ -21,6 +21,28 @@ export const metadata: Metadata = {
   description:
     'Join Dev Universe, the vibrant hub where developers collaborate, learn, and innovate! Explore a supportive community, ask and answer programming questions, harness the power of AI, vote for excellence, save valuable insights, and stay informed and inspired. Your journey to coding excellence begins here in the universe of endless possibilities!',
   icons: { icon: '/assets/images/site-logo.svg' },
+  openGraph: {
+    type: 'website',
+    url: 'https://dev-universe.vercel.app',
+    title: 'Dev Universe - Empowering Developers to Collaborate and Innovate',
+    description:
+      'Join Dev Universe, the vibrant hub where developers collaborate, learn, and innovate! Explore a supportive community, ask and answer programming questions, harness the power of AI, vote for excellence, save valuable insights, and stay informed and inspired. Your journey to coding excellence begins here in the universe of endless possibilities!',
+    siteName: 'Dev Universe',
+    images: [
+      {
+        url: '/app/meta-image.png',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Dev Universe - Empowering Developers to Collaborate and Innovate',
+    description:
+      'Join Dev Universe, the vibrant hub where developers collaborate, learn, and innovate! Explore a supportive community, ask and answer programming questions, harness the power of AI, vote for excellence, save valuable insights, and stay informed and inspired. Your journey to coding excellence begins here in the universe of endless possibilities!',
+    site: '@Dev Universe',
+    creator: '@Dev Universe',
+    images: '/app/meta-image.png',
+  },
 };
 
 export default function RootLayout({
@@ -30,64 +52,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <head>
-        <meta
-          itemProp='name'
-          content='Dev Universe - Empowering Developers to Collaborate and Innovate'
-        />
-        <meta
-          itemProp='description'
-          content='Join Dev Universe, the vibrant hub where developers collaborate, learn, and innovate! Explore a supportive community, ask and answer programming questions, harness the power of AI, vote for excellence, save valuable insights, and stay informed and inspired. Your journey to coding excellence begins here in the universe of endless possibilities!'
-        />
-
-        {/* Facebook Meta Tags */}
-        <meta
-          property='og:url'
-          content='https://dev-universe.vercel.app'
-        />
-        <meta
-          property='og:type'
-          content='website'
-        />
-        <meta
-          property='og:title'
-          content='Dev Universe - Empowering Developers to Collaborate and Innovate'
-        />
-        <meta
-          property='og:description'
-          content='Join Dev Universe, the vibrant hub where developers collaborate, learn, and innovate! Explore a supportive community, ask and answer programming questions, harness the power of AI, vote for excellence, save valuable insights, and stay informed and inspired. Your journey to coding excellence begins here in the universe of endless possibilities!'
-        />
-        <meta
-          property='og:image'
-          content='/app/meta-image.png'
-        />
-        {/* Twitter Meta Tags */}
-        <meta
-          name='twitter:card'
-          content='summary_large_image'
-        />
-        <meta
-          name='twitter:title'
-          content='Dev Universe - Empowering Developers to Collaborate and Innovate'
-        />
-        <meta
-          name='twitter:description'
-          content='Join Dev Universe, the vibrant hub where developers collaborate, learn, and innovate! Explore a supportive community, ask and answer programming questions, harness the power of AI, vote for excellence, save valuable insights, and stay informed and inspired. Your journey to coding excellence begins here in the universe of endless possibilities!'
-        />
-        <meta
-          property='twitter:image'
-          content='/app/meta-image.png'
-        />
-        {/* Additional meta tags */}
-        <meta
-          name='keywords'
-          content='developers, community, programming, web development, mobile app development, algorithms, data structures'
-        />
-        <meta
-          name='author'
-          content='Dev Universe'
-        />
-      </head>
       <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
         <ClerkProvider
           appearance={{

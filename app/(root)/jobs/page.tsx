@@ -1,7 +1,37 @@
 import React from 'react';
-
+import type { Metadata } from 'next';
+export const metadata: Metadata = {
+  title: 'Jobs | Dev Universe',
+  icons: { icon: '/assets/images/site-logo.svg' },
+  openGraph: {
+    type: 'website',
+    url: 'https://dev-universe.vercel.app',
+    title: 'Dev Universe - Empowering Developers to Collaborate and Innovate',
+    description:
+      'Join Dev Universe, the vibrant hub where developers collaborate, learn, and innovate! Explore a supportive community, ask and answer programming questions, harness the power of AI, vote for excellence, save valuable insights, and stay informed and inspired. Your journey to coding excellence begins here in the universe of endless possibilities!',
+    siteName: 'Dev Universe',
+    images: [
+      {
+        url: '/app/meta-image.png',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Dev Universe - Empowering Developers to Collaborate and Innovate',
+    description:
+      'Join Dev Universe, the vibrant hub where developers collaborate, learn, and innovate! Explore a supportive community, ask and answer programming questions, harness the power of AI, vote for excellence, save valuable insights, and stay informed and inspired. Your journey to coding excellence begins here in the universe of endless possibilities!',
+    site: '@Dev Universe',
+    creator: '@Dev Universe',
+    images: '/app/meta-image.png',
+  },
+};
 const page = () => {
-  return <div>Oops! This page is under mentenance 👷🚩</div>;
+  return (
+    <div className='dark:bg-light-500'>
+      Oops! This page is under mentenance 👷🚩
+    </div>
+  );
 };
 
 export default page;
