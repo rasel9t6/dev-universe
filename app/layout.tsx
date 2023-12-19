@@ -4,7 +4,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { Inter, Space_Grotesk } from 'next/font/google';
 import type { Metadata } from 'next';
 import '../styles/globals.css';
-import '../styles/prism.css'
+import '../styles/prism.css';
 import { ThemeProvider } from '@/context/ThemeProvider';
 const inter = Inter({
   subsets: ['latin'],
@@ -17,9 +17,9 @@ const spaceGrotesk = Space_Grotesk({
   variable: '--font-spaceGrotesk',
 });
 export const metadata: Metadata = {
-  title: 'Dev Universe',
+  title: 'Dev Universe - Empowering Developers to Collaborate and Innovate',
   description:
-    'A community-driven platform for asking and answring programming questions. Get help,share knowledge and collaborate with developers from around the world. Explore topics in web development, mobile app development, algorithms, data structures and more',
+    'Join Dev Universe, the vibrant hub where developers collaborate, learn, and innovate! Explore a supportive community, ask and answer programming questions, harness the power of AI, vote for excellence, save valuable insights, and stay informed and inspired. Your journey to coding excellence begins here in the universe of endless possibilities!',
   icons: { icon: '/assets/images/site-logo.svg' },
 };
 
@@ -30,6 +30,64 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
+      <head>
+        <meta
+          itemProp='name'
+          content='Dev Universe - Empowering Developers to Collaborate and Innovate'
+        />
+        <meta
+          itemProp='description'
+          content='Join Dev Universe, the vibrant hub where developers collaborate, learn, and innovate! Explore a supportive community, ask and answer programming questions, harness the power of AI, vote for excellence, save valuable insights, and stay informed and inspired. Your journey to coding excellence begins here in the universe of endless possibilities!'
+        />
+
+        {/* Facebook Meta Tags */}
+        <meta
+          property='og:url'
+          content='https://dev-universe.vercel.app'
+        />
+        <meta
+          property='og:type'
+          content='website'
+        />
+        <meta
+          property='og:title'
+          content='Dev Universe - Empowering Developers to Collaborate and Innovate'
+        />
+        <meta
+          property='og:description'
+          content='Join Dev Universe, the vibrant hub where developers collaborate, learn, and innovate! Explore a supportive community, ask and answer programming questions, harness the power of AI, vote for excellence, save valuable insights, and stay informed and inspired. Your journey to coding excellence begins here in the universe of endless possibilities!'
+        />
+        <meta
+          property='og:image'
+          content='/app/meta-image.png'
+        />
+        {/* Twitter Meta Tags */}
+        <meta
+          name='twitter:card'
+          content='summary_large_image'
+        />
+        <meta
+          name='twitter:title'
+          content='Dev Universe - Empowering Developers to Collaborate and Innovate'
+        />
+        <meta
+          name='twitter:description'
+          content='Join Dev Universe, the vibrant hub where developers collaborate, learn, and innovate! Explore a supportive community, ask and answer programming questions, harness the power of AI, vote for excellence, save valuable insights, and stay informed and inspired. Your journey to coding excellence begins here in the universe of endless possibilities!'
+        />
+        <meta
+          property='twitter:image'
+          content='/app/meta-image.png'
+        />
+        {/* Additional meta tags */}
+        <meta
+          name='keywords'
+          content='developers, community, programming, web development, mobile app development, algorithms, data structures'
+        />
+        <meta
+          name='author'
+          content='Dev Universe'
+        />
+      </head>
       <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
         <ClerkProvider
           appearance={{

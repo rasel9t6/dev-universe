@@ -21,7 +21,7 @@ const Page = async ({ params, searchParams }: URLProps) => {
         <div className='flex flex-col items-start gap-4 lg:flex-row'>
           <Image
             alt='profile picture'
-            src={userInfo?.user.picture}
+            src={userInfo.user.picture}
             width={140}
             height={140}
             className='rounded-full object-cover'
