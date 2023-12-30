@@ -6,7 +6,37 @@ import LocalSearchbar from '@/components/shared/search/LocalSearchbar';
 import { getAllTags } from '@/lib/actions/tag.actions';
 import { SearchParamsProps } from '@/types';
 import Link from 'next/link';
-
+import { Metadata } from 'next';
+export const metadata: Metadata = {
+  title: 'Tags | Dev Universe',
+  icons: { icon: '/assets/images/site-logo.svg' },
+  openGraph: {
+    type: 'website',
+    url: 'https://dev-universe.vercel.app/tags',
+    title: 'Dev Universe - Empowering Developers to Collaborate and Innovate',
+    description:
+      'Join Dev Universe, the vibrant hub where developers collaborate, learn, and innovate! Explore a supportive community, ask and answer programming questions, harness the power of AI, vote for excellence, save valuable insights, and stay informed and inspired. Your journey to coding excellence begins here in the universe of endless possibilities!',
+    siteName: 'Dev Universe',
+    images: [
+      {
+        url: './app/meta-image.png', // Provide the absolute URL
+        alt: 'Dev Universe Meta Image', // Include an alt attribute
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Dev Universe - Empowering Developers to Collaborate and Innovate',
+    description:
+      'Join Dev Universe, the vibrant hub where developers collaborate, learn, and innovate! Explore a supportive community, ask and answer programming questions, harness the power of AI, vote for excellence, save valuable insights, and stay informed and inspired. Your journey to coding excellence begins here in the universe of endless possibilities!',
+    site: '@DevUniverse',
+    creator: '@DevUniverse',
+    images: {
+      url: './app/meta-image.png',
+      alt: 'Dev Universe Twitter Image',
+    },
+  },
+};
 const page = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllTags({
     searchQuery: searchParams.q,

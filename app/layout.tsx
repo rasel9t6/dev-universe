@@ -39,12 +39,11 @@ export const metadata: Metadata = {
     title: 'Dev Universe - Empowering Developers to Collaborate and Innovate',
     description:
       'Join Dev Universe, the vibrant hub where developers collaborate, learn, and innovate! Explore a supportive community, ask and answer programming questions, harness the power of AI, vote for excellence, save valuable insights, and stay informed and inspired. Your journey to coding excellence begins here in the universe of endless possibilities!',
-    site: '@Dev Universe',
-    creator: '@Dev Universe',
-    images: '/app/meta-image.png',
+    site: '@DevUniverse', 
+    creator: '@DevUniverse',
+    images: ['/app/meta-image.png'],
   },
 };
-
 export default function RootLayout({
   children,
 }: {
